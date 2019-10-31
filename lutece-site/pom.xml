@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>lutece-site-pom</artifactId>
+    <groupId>fr.paris.lutece.tools</groupId>
+    <version>2.0.5</version>
+  </parent>
+      
+  <groupId>edu.jhu.library</groupId>
+  <artifactId>francis-lutece-test</artifactId>
+  <packaging>lutece-site</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <repositories>
+    <repository>
+      <id>lutece</id>
+      <name>luteceRepository</name>
+      <url>http://dev.lutece.paris.fr/maven_repository</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>fr.paris.lutece</groupId>
+      <artifactId>lutece-core</artifactId>
+      <version>6.2.0</version>
+      <type>lutece-core</type>
+    </dependency>
+
+    <dependency>
+      <groupId>fr.paris.lutece.plugins</groupId>
+      <artifactId>plugin-calendar</artifactId>
+      <version>4.1.1</version>
+      <type>lutece-plugin</type>
+    </dependency>
+  </dependencies>
+</project>

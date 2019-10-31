@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  lutece:
+    build: lutece-site/
+    image: jhulib/francis-lutece-test
+    container_name: lutece
+    env_file: .env
+    ports: 
+      - "8080:8080"
