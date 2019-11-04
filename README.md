@@ -16,6 +16,6 @@ if needed and then exit.
 
 # Use site
 
-Login as administrator: http://localhost:8080/francis/jsp/admin/AdminLogin.jsp
+Login as administrator: http://localhost:8080/lutece/jsp/admin/AdminLogin.jsp
 Username: admin
 Password: adminadmin
