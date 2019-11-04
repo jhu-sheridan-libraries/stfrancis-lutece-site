@@ -19,4 +19,3 @@ if needed and then exit.
 Login as administrator: http://localhost:8080/lutece/jsp/admin/AdminLogin.jsp
 Username: admin
 Password: adminadmin1
-    Had to change password because adminadmin aws no longer valid
