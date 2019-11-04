@@ -11,7 +11,7 @@ Document environment variables.
 Build the war and copy it to `lutece.war` in the main directory.
 Then run `docker-compose up`. Mysql, tomcat, and lutece-init containers will start.
 The mysql container keeps its db in a volume. The tomcat container will
-deploy 'lutece.war' and redeploy any updates. The lutece-init container will initialize the db
+deploy `lutece.war` and redeploy any updates. The lutece-init container will initialize the db
 if needed and then exit.
 
 # Use site
