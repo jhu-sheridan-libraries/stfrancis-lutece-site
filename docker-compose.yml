@@ -1,10 +1,37 @@
 version: '2'
 
 services:
-  lutece:
-    build: lutece-site/
-    image: jhulib/francis-lutece-test
-    container_name: lutece
-    env_file: .env
-    ports: 
-      - "8080:8080"
+    mysql:
+      container_name: mysql
+      image: mysql/mysql-server:5.5
+      env_file: .env
+      restart: always
+      ports:
+        - "3306:3306"
+      volumes:
+        - db:/var/lib/mysql
+
+    lutece-init:
+      build: lutece-init/
+      image: jhulib/lutece-init
+      container_name: lutece-init
+      env_file: .env
+      depends_on:
+        - mysql
+      volumes:
+        - ./lutece.war:/lutece.war
+
+    tomcat:
+      container_name: tomcat    
+      image: tomcat:8
+      env_file: .env
+      depends_on:
+        - lutece-init
+      ports:
+        - "8080:8080"
+      volumes:
+        - ./lutece.war:/usr/local/tomcat/webapps/lutece.war
+
+volumes:
+  db:
+    driver: local
