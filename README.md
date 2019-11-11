@@ -7,15 +7,15 @@ In lutece-site run `mvn lutece:site-assembly`. A war will be built in target/.
 Variables to configure MySQL docker container.
 See [https://github.com/docker-library/docs/tree/master/mysql] for more info.
 
-  - *MYSQL_DATABASE* (Datebase used. Created by MySQL container.)
-  - *MYSQL_USER*     (MySQL user for database.)
-  - *MYSQL_PASSWORD* (Passwords for MySQL user)
-  - *MYSQL_ROOT_PASSWORD* (Password for MySQL root user.)
+  - `MYSQL_DATABASE` (Datebase used. Created by MySQL container.)
+  - `MYSQL_USER`     (MySQL user for database.)
+  - `MYSQL_PASSWORD` (Passwords for MySQL user)
+  - `MYSQL_ROOT_PASSWORD` (Password for MySQL root user.)
 
 Variables to configure lutece-init container.
-  - *MYSQL_INIT_HOST* (MySQL host accessible to container.)
+  - `MYSQL_INIT_HOST` (MySQL host accessible to container.)
 
-The .env file provides default values.
+The `.env` file provides default values.
 
 # Run 
 
