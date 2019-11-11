@@ -5,7 +5,7 @@
 echo "Waiting for mysql server"
 
 while ! mysqladmin ping -hmysql --silent; do
-    sleep 2
+    sleep 1
 done
 
 echo "Found mysql server"
@@ -13,14 +13,10 @@ echo "Found mysql server"
 # If needed, init mysql db
 
 TABLE="core_datastore"
-SQL_EXISTS="desc $TABLE"
-USERNAME=lutece
-PASSWORD=lutece
-DATABASE=lutece
 
 echo "Checking if table <$TABLE> exists ..."
 
-mysql -u $USERNAME -p$PASSWORD -h mysql -e "$SQL_EXISTS" $DATABASE > /dev/null 2>&1
+mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -h ${MYSQL_INIT_HOST} -e "desc $TABLE" ${MYSQL_DATABASE} > /dev/null 2>&1
 
 if [ $? -eq 0 ]
 then
