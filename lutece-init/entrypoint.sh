@@ -23,6 +23,6 @@ then
     echo "Database already initialized"
 else
     echo "Initializing database..."
-    unzip /lutece.war -d lutece
+    unzip /lutece.war -d /lutece
     cd /lutece/WEB-INF/sql && ant
 fi

@@ -100,3 +100,25 @@ The options for the System drop down menu are as follows:
     Management of export XSL sheets lists the transformation sheets
         - Admin has the ability to add a transformation sheet.
     External Features Management allows the admin to manage external features
+
+#Initial User Management Findings
+- In the signing page there are links to recover your password and access code but no ability to create a new 
+  from the login page
+    - Should create consistency within the site, "login" and "access code" are used interchangeably and we should
+      only use one to reduce confusion
+    - Links will either ask for your access code or email depending on what you are trying to recover
+- I created a First Test user whose access code and password are "testfirst"
+    - When I try to log in for the first time after creating the user I am prompted to reset the password 
+        - This BUG should be resolved 
+    - If the user has no rights, then when they log in the website is completely blank and they cannot do anything
+        - Even if you set the user's rights when you create it, you must also manually select each of the individual
+          rights 
+            - This BUG should also be fixed as well
+- When I was logged in as both First Test and admin, the admin was unable to change the user's rights
+    - This is a very good feature!
+    - When the user decided to log out and the admin tries to change the user's rights the admin must relog back in 
+      before any changes can be made
+        - This may be a BUG we should think about changed in the future
+- QUESTIONS: 
+    - Are all the users on this site only for administrative purposes?
+        - This seems to be the case upon initial glance but something ot ponder in the future 
