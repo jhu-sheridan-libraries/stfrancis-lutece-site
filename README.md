@@ -17,6 +17,9 @@ Variables to configure lutece-init container.
 
 The `.env` file provides default values.
 
+In order to configure the db used by the lutece war, you must edit lutece-site/webapp/WEB-INF/conf/db.properties.
+That will set the default values. Or you can unpack the war and configure the file and then repack it.
+
 # Run 
 
 Build the war and copy it to `lutece.war` in the main directory.
