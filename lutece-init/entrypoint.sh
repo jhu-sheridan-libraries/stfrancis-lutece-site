@@ -4,7 +4,7 @@
 
 echo "Waiting for mysql server"
 
-while ! mysqladmin ping -hmysql --silent; do
+while ! mysqladmin ping -h${MYSQL_INIT_HOST} --silent; do
     sleep 1
 done
 
