@@ -3,11 +3,12 @@ version: '2'
 services:
     mysql:
       container_name: mysql
-      image: mysql/mysql-server:5.5
+      image: mysql/mysql-server:5.7
       env_file: .env
       restart: always
       volumes:
         - db:/var/lib/mysql
+        - ./.secrets/:/run/secrets/
 
     lutece-init:
       build: lutece-init/
@@ -18,6 +19,8 @@ services:
         - mysql
       volumes:
         - ./lutece.war:/lutece.war
+        - ./.webapps/:/webapps
+        - ./.secrets/:/run/secrets/
 
     tomcat:
       container_name: tomcat    
@@ -28,7 +31,7 @@ services:
       ports:
         - "8080:8080"
       volumes:
-        - ./lutece.war:/usr/local/tomcat/webapps/lutece.war
+        - ./.webapps/:/usr/local/tomcat/webapps/
 
 volumes:
   db:

@@ -12,21 +12,29 @@ See [https://github.com/docker-library/docs/tree/master/mysql] for more info.
   - `MYSQL_PASSWORD` (Passwords for MySQL user)
   - `MYSQL_ROOT_PASSWORD` (Password for MySQL root user.)
 
+Each one of these variables can have a _FILE appended. In that case, the variable value
+is read from that file. Both values should not be set, but they must be for the moment
+because the MySQL container does not appear to interpret them as documented.
+
 Variables to configure lutece-init container.
-  - `MYSQL_INIT_HOST` (MySQL host accessible to container.)
+  - `DB_HOST` (MySQL host accessible to container.)
 
 The `.env` file provides default values.
 
-In order to configure the db used by the lutece war, you must edit lutece-site/webapp/WEB-INF/conf/db.properties.
-That will set the default values. Or you can unpack the war and configure the file and then repack it.
+A complicating factor is that lutece can only be configured by modifying an internal db.properties file.
 
 # Run 
 
 Build the war and copy it to `lutece.war` in the main directory.
-Then run `docker-compose up`. Mysql, tomcat, and lutece-init containers will start.
-The mysql container keeps its db in a volume. The tomcat container will
-deploy `lutece.war` and redeploy any updates. The lutece-init container will initialize the db
-if needed and then exit.
+Then run `docker-compose up -d`. MySQL, tomcat, and lutece-init containers will start.
+The MySQL container will be configured according the the values set in the .env and 
+keeps its database in a volume.
+
+The lutece-init container will configure lutece.war by producing a modified version of
+the war in the .webapps directory. The modified war is only updated if the lutece.war
+is newer. Then the lutece-init container will initialize the database if needed and exit.
+
+The tomcat container will deploy everything in the .webapps directory. 
 
 # Use site
 
