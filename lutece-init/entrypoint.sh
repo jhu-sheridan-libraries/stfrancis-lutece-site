@@ -48,7 +48,8 @@ then
     LANG=en_US.UTF-8 rpl -q "#DB_PASS#" "${DB_PASS}" ${dbconfigfile}
     LANG=en_US.UTF-8 rpl -q "#DB_HOST#" "${DB_HOST}" ${dbconfigfile}    
 
-    cd ${extractdir} && jar cf ${deploywar} *
+    cd ${extractdir} && jar cf /tmp.war *
+    mv /tmp.war ${deploywar}
 fi
 
 # Wait for mysql
