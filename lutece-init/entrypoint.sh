@@ -35,6 +35,12 @@ sourcewar=/lutece.war
 deploywar=/webapps/lutece.war
 extractdir=/lutece
 dbconfigfile=${extractdir}/WEB-INF/conf/db.properties
+internalskinheaderfile=${extractdir}/WEB-INF/templates/skin/site/page_header_internal.html
+homeskinheaderfile=${extractdir}/WEB-INF/templates/skin/site/page_header_home.html
+internaladminheaderfile=${extractdir}/WEB-INF/templates/admin/site/page_header_internal_admin.html
+homeadminheaderfile=${extractdir}/WEB-INF/templates/admin/site/page_header_home_admin.html
+stockiconfile="logo-header.png"
+customiconfile="francis-header-white.png"
 
 if [ ! -f ${deploywar} ] || [ ${sourcewar} -nt ${deploywar} ]
 then
@@ -46,7 +52,12 @@ then
     LANG=en_US.UTF-8 rpl -q "#DB_NAME#" "${DB_NAME}" ${dbconfigfile}
     LANG=en_US.UTF-8 rpl -q "#DB_USER#" "${DB_USER}" ${dbconfigfile}
     LANG=en_US.UTF-8 rpl -q "#DB_PASS#" "${DB_PASS}" ${dbconfigfile}
-    LANG=en_US.UTF-8 rpl -q "#DB_HOST#" "${DB_HOST}" ${dbconfigfile}    
+    LANG=en_US.UTF-8 rpl -q "#DB_HOST#" "${DB_HOST}" ${dbconfigfile}
+
+    LANG=en_US.UTF-8 rpl -q "${stockiconfile}" "${customiconfile}" ${internalskinheaderfile}
+    LANG=en_US.UTF-8 rpl -q "${stockiconfile}" "${customiconfile}" ${homeskinheaderfile}
+    LANG=en_US.UTF-8 rpl -q "${stockiconfile}" "${customiconfile}" ${internaladminheaderfile}
+    LANG=en_US.UTF-8 rpl -q "${stockiconfile}" "${customiconfile}" ${homeadminheaderfile}
 
     cd ${extractdir} && jar cf /tmp.war *
     mv /tmp.war ${deploywar}
@@ -80,4 +91,8 @@ else
     unzip -q ${deploywar} -d ${extractdir}
  
     cd ${extractdir}/WEB-INF/sql && ant
+
+    if [ -f /lutece.sql ]
+      mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_HOST} ${DB_NAME} < /lutece.sql
+    fi
 fi
