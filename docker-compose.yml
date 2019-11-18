@@ -21,6 +21,7 @@ services:
         - ./lutece.war:/lutece.war
         - ./.webapps/:/webapps
         - ./.secrets/:/run/secrets/
+        - ./lutece.sql:/lutece.sql
 
     tomcat:
       container_name: tomcat    

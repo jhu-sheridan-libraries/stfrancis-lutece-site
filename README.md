@@ -32,7 +32,9 @@ keeps its database in a volume.
 
 The lutece-init container will configure lutece.war by producing a modified version of
 the war in the .webapps directory. The modified war is only updated if the lutece.war
-is newer. Then the lutece-init container will initialize the database if needed and exit.
+is newer. Then the lutece-init container will initialize the database if needed and exit. 
+If the database needs to be initialized, you can optionally provide a `lutece.sql` database dump file
+in the same directory as the `docker-compose.yml` file to populate the database tables created during this initialization.
 
 The tomcat container will deploy everything in the .webapps directory. 
 
@@ -40,7 +42,7 @@ The tomcat container will deploy everything in the .webapps directory.
 
 Login as administrator: http://localhost:8080/lutece/jsp/admin/AdminLogin.jsp
 Username: admin
-Password: adminadmin1
+Password: adminadmin
 
 
 # Application Functionality Summary
