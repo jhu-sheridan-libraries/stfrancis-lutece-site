@@ -42,7 +42,7 @@ The tomcat container will deploy everything in the .webapps directory.
 
 Login as administrator: http://localhost:8080/lutece/jsp/admin/AdminLogin.jsp
 Username: admin
-Password: adminadmin1
+Password: adminadmin
 
 
 # Application Functionality Summary
