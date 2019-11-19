@@ -14,6 +14,41 @@ get_file_value() {
     fi
 }
 
+# If needed, init MySQL db
+# Usage: init_db modified_war_dir
+init_db() {
+    modifiedwardir="$1"
+
+    echo "Waiting for MySQL server"
+
+    while ! mysqladmin ping -h${DB_HOST} --silent; do
+	sleep 1
+    done
+
+    echo "Found MySQL server"
+
+    TABLE="core_datastore"
+
+    echo "Checking if table <$TABLE> exists ..."
+
+    mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_HOST} -e "desc $TABLE" ${DB_NAME} > /dev/null 2>&1
+
+    if [ $? -eq 0 ]
+    then
+	echo "Database already initialized"
+    else
+	echo "Initializing database..."
+
+	cd ${modifiedwardir}/WEB-INF/sql && ant
+
+	if [ -f /lutece.sql ]
+	then
+	    echo "Loading /lutece.sql"
+	    mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_HOST} ${DB_NAME} < /lutece.sql
+	fi
+    fi
+}
+
 # Grab configuration values possibly stored in files
 
 get_file_value ${MYSQL_DATABASE_FILE} ${MYSQL_DATABASE}
@@ -33,6 +68,7 @@ DB_ROOT_PASS=${fileValue}
 
 sourcewar=/lutece.war
 deploywar=/webapps/lutece.war
+deployedwardir=/webapps/lutece
 extractdir=/lutece
 dbconfigfile=${extractdir}/WEB-INF/conf/db.properties
 internalskinheaderfile=${extractdir}/WEB-INF/templates/skin/site/page_header_internal.html
@@ -42,58 +78,37 @@ homeadminheaderfile=${extractdir}/WEB-INF/templates/admin/site/page_header_home_
 stockiconfile="logo-header.png"
 customiconfile="francis-header-white.png"
 
+# Replace strings in a given file
+# Usage: rplfile KEY VALUE FILE
+rplfile() {
+    # Set LANG to work around rpl bug
+    LANG=en_US.UTF-8 rpl -q "$1" "$2" "$3" > /dev/null 2>&1
+}
+
 if [ ! -f ${deploywar} ] || [ ${sourcewar} -nt ${deploywar} ]
 then
-    rm -f ${deploywar}
+    echo "Modifying war"
 
+    rm -f ${deploywar}
     unzip -q ${sourcewar} -d ${extractdir}
 
-    # Set LANG to work around rpl bug
-    LANG=en_US.UTF-8 rpl -q "#DB_NAME#" "${DB_NAME}" ${dbconfigfile}
-    LANG=en_US.UTF-8 rpl -q "#DB_USER#" "${DB_USER}" ${dbconfigfile}
-    LANG=en_US.UTF-8 rpl -q "#DB_PASS#" "${DB_PASS}" ${dbconfigfile}
-    LANG=en_US.UTF-8 rpl -q "#DB_HOST#" "${DB_HOST}" ${dbconfigfile}
+    rplfile "#DB_NAME#" "${DB_NAME}" ${dbconfigfile}
+    rplfile "#DB_USER#" "${DB_USER}" ${dbconfigfile}
+    rplfile "#DB_PASS#" "${DB_PASS}" ${dbconfigfile}
+    rplfile "#DB_HOST#" "${DB_HOST}" ${dbconfigfile}
 
-    LANG=en_US.UTF-8 rpl -q "${stockiconfile}" "${customiconfile}" ${internalskinheaderfile}
-    LANG=en_US.UTF-8 rpl -q "${stockiconfile}" "${customiconfile}" ${homeskinheaderfile}
-    LANG=en_US.UTF-8 rpl -q "${stockiconfile}" "${customiconfile}" ${internaladminheaderfile}
-    LANG=en_US.UTF-8 rpl -q "${stockiconfile}" "${customiconfile}" ${homeadminheaderfile}
+    rplfile "${stockiconfile}" "${customiconfile}" ${internalskinheaderfile}
+    rplfile "${stockiconfile}" "${customiconfile}" ${homeskinheaderfile}
+    rplfile "${stockiconfile}" "${customiconfile}" ${internaladminheaderfile}
+    rplfile "${stockiconfile}" "${customiconfile}" ${homeadminheaderfile}
+
+    init_db ${extractdir}
 
     cd ${extractdir} && jar cf /tmp.war *
+
+    echo "Deploying modified war"
     mv /tmp.war ${deploywar}
-fi
-
-# Wait for mysql
-
-echo "Waiting for mysql server"
-
-while ! mysqladmin ping -h${DB_HOST} --silent; do
-    sleep 1
-done
-
-echo "Found mysql server"
-
-# If needed, init mysql db
-
-TABLE="core_datastore"
-
-echo "Checking if table <$TABLE> exists ..."
-
-mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_HOST} -e "desc $TABLE" ${DB_NAME} > /dev/null 2>&1
-
-if [ $? -eq 0 ]
-then
-    echo "Database already initialized"
 else
-    echo "Initializing database..."
-
-    rm -rf ${extractdir}
-    unzip -q ${deploywar} -d ${extractdir}
- 
-    cd ${extractdir}/WEB-INF/sql && ant
-
-    if [ -f /lutece.sql ]
-    then
-      mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_HOST} ${DB_NAME} < /lutece.sql
-    fi
+    echo "No war modification needed"
+    init_db ${deploywardir}
 fi
