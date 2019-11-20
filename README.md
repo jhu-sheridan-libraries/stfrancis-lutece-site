@@ -13,7 +13,8 @@ See [https://github.com/docker-library/docs/tree/master/mysql] for more info.
   - `MYSQL_ROOT_PASSWORD` (Password for MySQL root user.)
 
 Each one of these variables can have a _FILE appended. In that case, the variable value
-is read from that file. Both values should not be set, but they must be for the moment
+is read from that file. (The _FILE variables point to ./secrets which is made available to containers
+as /run/secrets.) Both values should not be set, but they must be for the moment
 because the MySQL container does not appear to interpret them as documented.
 
 Variables to configure lutece-init container.
