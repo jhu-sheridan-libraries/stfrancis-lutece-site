@@ -1,6 +1,6 @@
 # Build
 
-In lutece-site run `mvn lutece:site-assembly`. A war will be built in target/.
+First install a dependency. In src/plugins/plugin-enroll, run 'mvn install'. Then build the site. In lutece-site run `mvn lutece:site-assembly`. A war will be built in target/.
 
 # Configuration
 
