@@ -77,16 +77,8 @@ public class EnrollPortletJspBean extends PortletJspBean
     {
         String strPageId = request.getParameter( PARAMETER_PAGE_ID );
         String strPortletTypeId = request.getParameter( PARAMETER_PORTLET_TYPE_ID );
-        Collection<Project> listProjects = ProjectHome.getProjectsList( );
-        ReferenceList refListProjects = new ReferenceList( );
-
-        for ( Project project : listProjects )
-        {
-            refListProjects.addItem( project.getId( ), project.getName( ) );
-        }
 
         Map<String, Object> model = new HashMap<String, Object>( );
-        model.put( MARK_LIST_PROJECTS, refListProjects );
 
         HtmlTemplate template = getCreateTemplate( strPageId, strPortletTypeId, model );
 
@@ -103,16 +95,8 @@ public class EnrollPortletJspBean extends PortletJspBean
     {
         String strPortletId = request.getParameter( PARAMETER_PORTLET_ID );
         int nPortletId = Integer.parseInt( strPortletId );
-        Collection<Project> listProjects = ProjectHome.getProjectsList( );
-        ReferenceList refListProjects = new ReferenceList( );
-
-        for ( Project project : listProjects )
-        {
-            refListProjects.addItem( project.getId( ), project.getName( ) );
-        }
 
         Map<String, Object> model = new HashMap<String, Object>( );
-        model.put( MARK_LIST_PROJECTS, refListProjects );
         EnrollPortlet portlet = (EnrollPortlet) PortletHome.findByPrimaryKey( nPortletId );
         HtmlTemplate template = getModifyTemplate( portlet, model );
 
@@ -133,17 +117,6 @@ public class EnrollPortletJspBean extends PortletJspBean
         // recovers portlet specific attributes
         String strPageId = request.getParameter( PARAMETER_PAGE_ID );
         int nPageId = Integer.parseInt( strPageId );
-        String strProjectId = request.getParameter( PARAMETER_PROJECT );
-
-        if ( StringUtils.isNotEmpty( strProjectId ) && StringUtils.isNumeric( strProjectId ) )
-        {
-            int nIdProject = Integer.parseInt( strProjectId );
-            portlet.setIdProject( nIdProject );
-        }
-        else
-        {
-            return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_NO_PROJECT_SELECTED, AdminMessage.TYPE_STOP );
-        }
 
         // get portlet common attributes
         String strErrorUrl = setPortletCommonData( request, portlet );
@@ -175,19 +148,6 @@ public class EnrollPortletJspBean extends PortletJspBean
         String strPortletId = request.getParameter( PARAMETER_PORTLET_ID );
         int nPortletId = Integer.parseInt( strPortletId );
         EnrollPortlet portlet = (EnrollPortlet) PortletHome.findByPrimaryKey( nPortletId );
-
-        String strProjectId = request.getParameter( PARAMETER_PROJECT );
-
-        if ( StringUtils.isNotEmpty( strProjectId ) && StringUtils.isNumeric( strProjectId ) )
-        {
-            int nIdProject = Integer.parseInt( strProjectId );
-            portlet.setIdProject( nIdProject );
-        }
-        else
-        {
-            return AdminMessageService.getMessageUrl( request, MESSAGE_ERROR_NO_PROJECT_SELECTED, AdminMessage.TYPE_STOP );
-        }
-
         // retrieve portlet common attributes
         String strErrorUrl = setPortletCommonData( request, portlet );
 

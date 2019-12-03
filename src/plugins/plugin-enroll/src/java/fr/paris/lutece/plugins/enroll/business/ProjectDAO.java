@@ -48,11 +48,11 @@ public final class ProjectDAO implements IProjectDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = "SELECT max( id_project ) FROM enroll_project";
-    private static final String SQL_QUERY_SELECT = "SELECT id_project, name, email, phone FROM enroll_project WHERE id_project = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO enroll_project ( id_project, name, email, phone ) VALUES ( ?, ?, ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT id_project, name, size, currentsize, active FROM enroll_project WHERE id_project = ?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO enroll_project ( id_project, name, size, currentsize, active ) VALUES ( ?, ?, ?, ?, ?) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM enroll_project WHERE id_project = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE enroll_project SET id_project = ?, name = ?, email = ?, phone = ? WHERE id_project = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_project, name, email, phone FROM enroll_project";
+    private static final String SQL_QUERY_UPDATE = "UPDATE enroll_project SET id_project = ?, name = ?, size = ?, currentsize = ?, active = ? WHERE id_project = ?";
+    private static final String SQL_QUERY_SELECTALL = "SELECT id_project, name, size, currentsize, active FROM enroll_project";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_project FROM enroll_project";
 
     /**
@@ -83,12 +83,15 @@ public final class ProjectDAO implements IProjectDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
         project.setId( newPrimaryKey( plugin ) );
+        project.setActive(1);
+        project.setCurrentSize(0);
         int nIndex = 1;
-        
+
         daoUtil.setInt( nIndex++ , project.getId( ) );
         daoUtil.setString( nIndex++ , project.getName( ) );
-        daoUtil.setString( nIndex++ , project.getEmail( ) );
-        daoUtil.setString( nIndex++ , project.getPhone( ) );
+        daoUtil.setInt( nIndex++ , project.getSize( ) );
+        daoUtil.setInt( nIndex++ , project.getCurrentSize( ) );
+        daoUtil.setInt( nIndex++ , project.getActive( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -109,11 +112,12 @@ public final class ProjectDAO implements IProjectDAO
         {
             project = new Project();
             int nIndex = 1;
-            
+
             project.setId( daoUtil.getInt( nIndex++ ) );
             project.setName( daoUtil.getString( nIndex++ ) );
-            project.setEmail( daoUtil.getString( nIndex++ ) );
-            project.setPhone( daoUtil.getString( nIndex++ ) );
+            project.setSize( daoUtil.getInt( nIndex++ ) );
+            project.setCurrentSize( daoUtil.getInt( nIndex++ ));
+            project.setActive( daoUtil.getInt( nIndex++ ) );
         }
 
         daoUtil.free( );
@@ -140,11 +144,12 @@ public final class ProjectDAO implements IProjectDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
         int nIndex = 1;
-        
+
         daoUtil.setInt( nIndex++ , project.getId( ) );
         daoUtil.setString( nIndex++ , project.getName( ) );
-        daoUtil.setString( nIndex++ , project.getEmail( ) );
-        daoUtil.setString( nIndex++ , project.getPhone( ) );
+        daoUtil.setInt( nIndex++ , project.getSize( ) );
+        daoUtil.setInt( nIndex++ , project.getCurrentSize() );
+        daoUtil.setInt( nIndex++ , project.getActive( ) );
         daoUtil.setInt( nIndex , project.getId( ) );
 
         daoUtil.executeUpdate( );
@@ -165,11 +170,12 @@ public final class ProjectDAO implements IProjectDAO
         {
             Project project = new Project(  );
             int nIndex = 1;
-            
+
             project.setId( daoUtil.getInt( nIndex++ ) );
             project.setName( daoUtil.getString( nIndex++ ) );
-            project.setEmail( daoUtil.getString( nIndex++ ) );
-            project.setPhone( daoUtil.getString( nIndex++ ) );
+            project.setSize( daoUtil.getInt( nIndex++ ) );
+            project.setCurrentSize ( daoUtil.getInt( nIndex++ ));
+            project.setActive( daoUtil.getInt( nIndex++ ) );
 
             projectList.add( project );
         }
@@ -177,7 +183,7 @@ public final class ProjectDAO implements IProjectDAO
         daoUtil.free( );
         return projectList;
     }
-    
+
     /**
      * {@inheritDoc }
      */
@@ -196,7 +202,7 @@ public final class ProjectDAO implements IProjectDAO
         daoUtil.free( );
         return projectList;
     }
-    
+
     /**
      * {@inheritDoc }
      */
