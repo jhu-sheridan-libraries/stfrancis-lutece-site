@@ -1,40 +1,13 @@
-/*
- * Copyright (c) 2002-2016, Mairie de Paris
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *  1. Redistributions of source code must retain the above copyright notice
- *     and the following disclaimer.
- *
- *  2. Redistributions in binary form must reproduce the above copyright notice
- *     and the following disclaimer in the documentation and/or other materials
- *     provided with the distribution.
- *
- *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
- *     contributors may be used to endorse or promote products derived from
- *     this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * License 1.0
- */
+ /*
+  * @author Evan Hsia, Sofya Freyman
+  */
 package fr.paris.lutece.plugins.enroll.web;
 
 import fr.paris.lutece.plugins.enroll.business.Project;
 import fr.paris.lutece.plugins.enroll.business.ProjectHome;
+import fr.paris.lutece.plugins.enroll.business.enrollment.Enrollment;
+import fr.paris.lutece.plugins.enroll.business.enrollment.EnrollmentHome;
+import org.apache.commons.lang.StringUtils;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
@@ -43,8 +16,12 @@ import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.util.url.UrlItem;
 
 import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import java.awt.datatransfer.*;
+import java.awt.Toolkit;
 
 /**
  * This class provides the user interface to manage Project features ( manage, create, modify, remove )
@@ -56,9 +33,11 @@ public class ProjectJspBean extends ManageEnrollJspBean
     private static final String TEMPLATE_MANAGE_PROJECTS = "/admin/plugins/enroll/manage_projects.html";
     private static final String TEMPLATE_CREATE_PROJECT = "/admin/plugins/enroll/create_project.html";
     private static final String TEMPLATE_MODIFY_PROJECT = "/admin/plugins/enroll/modify_project.html";
+    private static final String TEMPLATE_EMAIL_ALL = "/admin/plugins/enroll/email_all.html";
 
     // Parameters
     private static final String PARAMETER_ID_PROJECT = "id";
+    private static final String PARAMETER_EMAILS = "emails";
 
     // Properties for page titles
     private static final String PROPERTY_PAGE_TITLE_MANAGE_PROJECTS = "enroll.manage_projects.pageTitle";
@@ -87,15 +66,21 @@ public class ProjectJspBean extends ManageEnrollJspBean
     private static final String ACTION_MODIFY_PROJECT = "modifyProject";
     private static final String ACTION_REMOVE_PROJECT = "removeProject";
     private static final String ACTION_CONFIRM_REMOVE_PROJECT = "confirmRemoveProject";
+    private static final String ACTION_CHANGE_STATUS = "doChangeProjectStatus";
+    private static final String ACTION_COPY_EMAILS = "copyEmails";
 
     // Infos
     private static final String INFO_PROJECT_CREATED = "enroll.info.project.created";
     private static final String INFO_PROJECT_UPDATED = "enroll.info.project.updated";
     private static final String INFO_PROJECT_REMOVED = "enroll.info.project.removed";
-    
+    private static final String INFO_INCREASE_SIZE = "enroll.info.project.increase";
+    private static final String INFO_SIZE_IS_SMALL = "enroll.info.project.sizesmall";
+    private static final String INFO_PROJECT_SAME_NAME = "enroll.info.project.samename";
+    private static final String INFO_EMAILS_COPIED = "enroll.info.project.emailscopied";
+
     // Session variable to store working values
     private Project _project;
-    
+
     /**
      * Build the Manage View
      * @param request The HTTP request
@@ -104,7 +89,7 @@ public class ProjectJspBean extends ManageEnrollJspBean
     @View( value = VIEW_MANAGE_PROJECTS, defaultView = true )
     public String getManageProjects( HttpServletRequest request )
     {
-        _project = null;
+        //_project = null;
         List<Project> listProjects = ProjectHome.getProjectsList(  );
         Map<String, Object> model = getPaginatedListModel( request, MARK_PROJECT_LIST, listProjects, JSP_MANAGE_PROJECTS );
 
@@ -120,7 +105,7 @@ public class ProjectJspBean extends ManageEnrollJspBean
     @View( VIEW_CREATE_PROJECT )
     public String getCreateProject( HttpServletRequest request )
     {
-        _project = ( _project != null ) ? _project : new Project(  );
+        _project = new Project();
 
         Map<String, Object> model = getModel(  );
         model.put( MARK_PROJECT, _project );
@@ -137,6 +122,9 @@ public class ProjectJspBean extends ManageEnrollJspBean
     @Action( ACTION_CREATE_PROJECT )
     public String doCreateProject( HttpServletRequest request )
     {
+
+        _project = new Project();
+
         populate( _project, request );
 
         // Check constraints
@@ -144,11 +132,35 @@ public class ProjectJspBean extends ManageEnrollJspBean
         {
             return redirectView( request, VIEW_CREATE_PROJECT );
         }
+        Collection<Project> listProjects = ProjectHome.getProjectsList( );
+        for ( Project project : listProjects )
+        {
+          if (project.getName().equals(_project.getName())) {
+            addInfo( INFO_PROJECT_SAME_NAME, getLocale(  ) );
+            return redirectView( request, VIEW_MANAGE_PROJECTS );
+          }
+        }
 
         ProjectHome.create( _project );
         addInfo( INFO_PROJECT_CREATED, getLocale(  ) );
 
         return redirectView( request, VIEW_MANAGE_PROJECTS );
+    }
+
+    @Action( ACTION_CHANGE_STATUS )
+    public String doChangeProjectStatus( HttpServletRequest request )
+    {
+      String strIdProject = request.getParameter( PARAMETER_ID_PROJECT );
+      int nIdProject = Integer.parseInt( strIdProject );
+      Project project = ProjectHome.findByPrimaryKey( nIdProject );
+      if (project.getActive() == 0 && project.getSize() != 0 && project.getSize() == project.getCurrentSize()) {
+        addInfo( INFO_INCREASE_SIZE, getLocale(  ) );
+        return redirectView( request, VIEW_MANAGE_PROJECTS );
+      }
+      project.flipActive();
+      ProjectHome.update( project );
+
+      return redirectView( request, VIEW_MANAGE_PROJECTS );
     }
 
     /**
@@ -167,7 +179,32 @@ public class ProjectJspBean extends ManageEnrollJspBean
 
         String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_PROJECT, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
 
+
         return redirect( request, strMessageUrl );
+    }
+
+    @Action( ACTION_COPY_EMAILS )
+    public String copyEmails( HttpServletRequest request )
+    {
+        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
+
+        String _projectName = ProjectHome.findByPrimaryKey(nId).getName();
+        String result = "";
+
+        List<Enrollment> listEnrollments = EnrollmentHome.getEnrollmentsList(  );
+        for (Enrollment enrollment : listEnrollments) {
+          if (enrollment.getProgram().equals(_projectName)) {
+            result = result + enrollment.getEmail() + ", ";
+          }
+        }
+        if (result.length() > 0) {
+          result = result.substring(0, result.length()-2);
+        }
+
+        Map<String, Object> model = getModel(  );
+        model.put( PARAMETER_EMAILS , result );
+
+        return getPage( " ", TEMPLATE_EMAIL_ALL, model );
     }
 
     /**
@@ -180,6 +217,13 @@ public class ProjectJspBean extends ManageEnrollJspBean
     public String doRemoveProject( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
+        String _projectName = ProjectHome.findByPrimaryKey(nId).getName();
+        List<Enrollment> listEnrollments = EnrollmentHome.getEnrollmentsList(  );
+        for (int i = 0; i < listEnrollments.size(); i++) {
+          if (listEnrollments.get(i).getProgram().equals(_projectName)) {
+            EnrollmentHome.remove(listEnrollments.get(i).getId());
+          }
+        }
         ProjectHome.remove( nId );
         addInfo( INFO_PROJECT_REMOVED, getLocale(  ) );
 
@@ -197,10 +241,7 @@ public class ProjectJspBean extends ManageEnrollJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_PROJECT ) );
 
-        if ( _project == null || ( _project.getId(  ) != nId ))
-        {
-            _project = ProjectHome.findByPrimaryKey( nId );
-        }
+        _project = ProjectHome.findByPrimaryKey( nId );
 
         Map<String, Object> model = getModel(  );
         model.put( MARK_PROJECT, _project );
@@ -217,12 +258,76 @@ public class ProjectJspBean extends ManageEnrollJspBean
     @Action( ACTION_MODIFY_PROJECT )
     public String doModifyProject( HttpServletRequest request )
     {
+        int tempSize = _project.getSize();
+        int tempActive = _project.getActive();
+        String temp = _project.getName();
         populate( _project, request );
 
         // Check constraints
         if ( !validateBean( _project, VALIDATION_ATTRIBUTES_PREFIX ) )
         {
             return redirect( request, VIEW_MODIFY_PROJECT, PARAMETER_ID_PROJECT, _project.getId( ) );
+        }
+        if (_project.getSize() == 0) {
+          if (!(temp.equals(_project.getName()))) {
+            Collection<Project> listProjects = ProjectHome.getProjectsList( );
+            for ( Project project : listProjects )
+            {
+              if (project.getName().equals(_project.getName())) {
+                addInfo( INFO_PROJECT_SAME_NAME, getLocale(  ) );
+                return redirectView( request, VIEW_MANAGE_PROJECTS );
+              }
+            }
+          }
+          ProjectHome.update( _project );
+          addInfo( INFO_PROJECT_UPDATED, getLocale(  ) );
+          return redirectView( request, VIEW_MANAGE_PROJECTS );
+        }
+        if (_project.getSize() < _project.getCurrentSize()) {
+          addInfo( INFO_SIZE_IS_SMALL, getLocale(  ) );
+          return redirect( request, VIEW_MODIFY_PROJECT, PARAMETER_ID_PROJECT, _project.getId( ) );
+        }
+        if (_project.getSize() == _project.getCurrentSize()) {
+          _project.flipActive();
+          if (!(temp.equals(_project.getName()))) {
+            Collection<Project> listProjects = ProjectHome.getProjectsList( );
+            for ( Project project : listProjects )
+            {
+              if (project.getName().equals(_project.getName())) {
+                addInfo( INFO_PROJECT_SAME_NAME, getLocale(  ) );
+                return redirectView( request, VIEW_MANAGE_PROJECTS );
+              }
+            }
+          }
+          ProjectHome.update( _project );
+          addInfo( INFO_PROJECT_UPDATED, getLocale(  ) );
+          return redirectView( request, VIEW_MANAGE_PROJECTS );
+        }
+        if (_project.getSize() > tempSize && _project.getSize() > _project.getCurrentSize() && tempActive == 0) {
+          _project.flipActive();
+          if (!(temp.equals(_project.getName()))) {
+            Collection<Project> listProjects = ProjectHome.getProjectsList( );
+            for ( Project project : listProjects )
+            {
+              if (project.getName().equals(_project.getName())) {
+                addInfo( INFO_PROJECT_SAME_NAME, getLocale(  ) );
+                return redirectView( request, VIEW_MANAGE_PROJECTS );
+              }
+            }
+          }
+          ProjectHome.update( _project );
+          addInfo( INFO_PROJECT_UPDATED, getLocale(  ) );
+          return redirectView( request, VIEW_MANAGE_PROJECTS );
+        }
+        if (!(temp.equals(_project.getName()))) {
+          Collection<Project> listProjects = ProjectHome.getProjectsList( );
+          for ( Project project : listProjects )
+          {
+            if (project.getName().equals(_project.getName())) {
+              addInfo( INFO_PROJECT_SAME_NAME, getLocale(  ) );
+              return redirectView( request, VIEW_MANAGE_PROJECTS );
+            }
+          }
         }
 
         ProjectHome.update( _project );

@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */ 
+ */
 package fr.paris.lutece.plugins.enroll.business;
 
 import javax.validation.constraints.*;
@@ -39,25 +39,21 @@ import java.io.Serializable;
 
 /**
  * This is the business class for the object Project
- */ 
+ */
 public class Project implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    // Variables declarations 
+    // Variables declarations
     private int _nId;
-    
-    @NotEmpty( message = "#i18n{enroll.validation.project.Name.notEmpty}" )
-    @Size( max = 50 , message = "#i18n{enroll.validation.project.Name.size}" ) 
+
     private String _strName;
-    
-    @NotEmpty( message = "#i18n{enroll.validation.project.Email.notEmpty}" )
-    @Size( max = 50 , message = "#i18n{enroll.validation.project.Email.size}" ) 
-    private String _strEmail;
-    
-    @NotEmpty( message = "#i18n{enroll.validation.project.Phone.notEmpty}" )
-    @Size( max = 50 , message = "#i18n{enroll.validation.project.Phone.size}" ) 
-    private String _strPhone;
+
+    private int _size;
+
+    private int _currentsize;
+
+    private int _active;
 
     /**
      * Returns the Id
@@ -71,12 +67,12 @@ public class Project implements Serializable
     /**
      * Sets the Id
      * @param nId The Id
-     */ 
+     */
     public void setId( int nId )
     {
         _nId = nId;
     }
-    
+
     /**
      * Returns the Name
      * @return The Name
@@ -89,45 +85,47 @@ public class Project implements Serializable
     /**
      * Sets the Name
      * @param strName The Name
-     */ 
+     */
     public void setName( String strName )
     {
         _strName = strName;
     }
-    
-    /**
-     * Returns the Email
-     * @return The Email
-     */
-    public String getEmail( )
+
+    public int getSize( )
     {
-        return _strEmail;
+        return _size;
     }
 
-    /**
-     * Sets the Email
-     * @param strEmail The Email
-     */ 
-    public void setEmail( String strEmail )
+    public void setSize( int size )
     {
-        _strEmail = strEmail;
-    }
-    
-    /**
-     * Returns the Phone
-     * @return The Phone
-     */
-    public String getPhone( )
-    {
-        return _strPhone;
+        _size = size;
     }
 
-    /**
-     * Sets the Phone
-     * @param strPhone The Phone
-     */ 
-    public void setPhone( String strPhone )
+    public int getActive( )
     {
-        _strPhone = strPhone;
+        return _active;
+    }
+
+    public void setActive( int act )
+    {
+        _active = act;
+    }
+
+    public void flipActive( )
+    {
+        if (_active == 0) {
+          _active = 1;
+        } else {
+          _active = 0;
+        }
+    }
+
+    public int getCurrentSize( )
+    {
+        return _currentsize;
+    }
+
+    public void setCurrentSize( int cs ) {
+      _currentsize = cs;
     }
 }

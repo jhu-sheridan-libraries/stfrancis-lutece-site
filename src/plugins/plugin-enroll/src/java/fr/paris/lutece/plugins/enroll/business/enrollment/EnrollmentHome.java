@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class EnrollmentHome {
   private static Plugin _plugin = PluginService.getPlugin("enroll");
-  private static IEnrollmentDAO _dao = SpringContextService.getBean("enroll.enrollment.EnrollmentDAO");
+  private static IEnrollmentDAO _dao = SpringContextService.getBean("enroll.enrollmentDAO");
 
   private EnrollmentHome() {
   }

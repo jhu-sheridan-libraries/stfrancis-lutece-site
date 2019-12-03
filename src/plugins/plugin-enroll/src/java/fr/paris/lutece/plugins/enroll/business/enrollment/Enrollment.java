@@ -6,16 +6,9 @@ import java.io.Serializable;
 
 public class Enrollment implements Serializable {
   private int _nId;
-  private int _projectId;
   private String _strEnrollment;
-  @NotEmpty( message = "#i18n{enroll.validation.enrollment.Name.notEmpty}" )
-  @Size( max = 50 , message = "#i18n{enroll.validation.enrollment.Name.size}" )
   private String _strContactName;
-  @NotEmpty( message = "#i18n{enroll.validation.enrollment.Email.notEmpty}" )
-  @Size( max = 50 , message = "#i18n{enroll.validation.enrollment.Email.size}" )
   private String _strContactEmail;
-  @NotEmpty( message = "#i18n{enroll.validation.enrollment.Phone.notEmpty}" )
-  @Size( max = 50 , message = "#i18n{enroll.validation.enrollment.Phone.size}" )
   private String _strContactNumber;
 
   public int getId() {
@@ -26,35 +19,35 @@ public class Enrollment implements Serializable {
     _nId = id;
   }
 
-  public String getEnrollment() {
+  public String getProgram() {
     return _strEnrollment;
   }
 
-  public void setEnrollment(String enrollmentName) {
+  public void setProgram(String enrollmentName) {
     _strEnrollment = enrollmentName;
   }
 
-  public String getContactName() {
+  public String getName() {
     return _strContactName;
   }
 
-  public void setContactName(String name) {
+  public void setName(String name) {
     _strContactName = name;
   }
 
-  public String getContactEmail() {
+  public String getEmail() {
     return _strContactEmail;
   }
 
-  public void setContactEmail(String email) {
+  public void setEmail(String email) {
     _strContactEmail = email;
   }
 
-  public String getContactNumber() {
+  public String getPhone() {
     return _strContactNumber;
   }
 
-  public void setContactNumber(String number) {
+  public void setPhone(String number) {
     _strContactNumber = number;
   }
 }

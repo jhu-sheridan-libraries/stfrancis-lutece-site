@@ -5,9 +5,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
 
     <bean id="enroll.projectDAO" class="fr.paris.lutece.plugins.enroll.business.ProjectDAO" />
+    <bean id="enroll.enrollmentDAO" class="fr.paris.lutece.plugins.enroll.business.enrollment.EnrollmentDAO" />
     <bean id="enroll.projectRest" class="fr.paris.lutece.plugins.enroll.rs.ProjectRest" />
+    <bean id="enroll.enrollmentRest" class="fr.paris.lutece.plugins.enroll.rs.EnrollmentRest" />
 
     <bean id="enroll.swaggerRest" class="fr.paris.lutece.plugins.enroll.rs.SwaggerRest" />
 
-    <bean id="enroll.EnrollPortletDAO" class="fr.paris.lutece.plugins.enroll.business.portlet.EnrollPortletDAO" />    
+    <bean id="enroll.EnrollPortletDAO" class="fr.paris.lutece.plugins.enroll.business.portlet.EnrollPortletDAO" />
 </beans>

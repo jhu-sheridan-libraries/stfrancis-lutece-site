@@ -36,27 +36,33 @@ package fr.paris.lutece.plugins.enroll.rs;
 /**
  * Rest Constants
  */
-public final class Constants 
+public final class Constants
 {
     public static final String API_PATH = "enroll/api";
     public static final String VERSION_PATH = "/v{" + Constants.VERSION + "}";
     public static final String ID_PATH = "/{" + Constants.ID + "}";
     public static final String VERSION = "version";
     public static final String ID = "id";
-    
+
     public static final String SWAGGER_DIRECTORY_PATH = "/plugins/";
     public static final String SWAGGER_PATH = "/swagger";
     public static final String SWAGGER_VERSION_PATH = "/v";
     public static final String SWAGGER_REST_PATH = "rest/";
     public static final String SWAGGER_JSON = "/swagger.json";
-    
+
     public static final String EMPTY_OBJECT = "{}";
     public static final String ERROR_NOT_FOUND_VERSION = "Version not found";
     public static final String ERROR_NOT_FOUND_RESOURCE = "Resource not found";
     public static final String ERROR_BAD_REQUEST_EMPTY_PARAMETER = "Empty parameter";
-    
+
     public static final String PROJECT_PATH = "/projects";
     public static final String PROJECT_ATTRIBUTE_NAME = "name";
-    public static final String PROJECT_ATTRIBUTE_EMAIL = "email";
-    public static final String PROJECT_ATTRIBUTE_PHONE = "phone";
+    public static final String PROJECT_ATTRIBUTE_SIZE = "size";
+    public static final String PROJECT_ATTRIBUTE_CURRENT_SIZE = "currentsize";
+    public static final String PROJECT_ATTRIBUTE_ACTIVE = "active";
+
+    public static final String ENROLLMENT_ATTRIBUTE_NAME = "name";
+    public static final String ENROLLMENT_ATTRIBUTE_PROGRAM = "program";
+    public static final String ENROLLMENT_ATTRIBUTE_EMAIL = "email";
+    public static final String ENROLLMENT_ATTRIBUTE_PHONE = "phone";
 }

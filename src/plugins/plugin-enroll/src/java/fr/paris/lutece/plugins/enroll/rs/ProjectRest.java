@@ -62,7 +62,7 @@ public class ProjectRest
 {
     private static final int VERSION_1 = 1;
     private final Logger _logger = Logger.getLogger( RestConstants.REST_LOGGER );
-    
+
     /**
      * Get Project List
      * @param nVersion the API version
@@ -85,7 +85,7 @@ public class ProjectRest
                 .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_VERSION ) ) )
                 .build( );
     }
-    
+
     /**
      * Get Project List V1
      * @return the Project List for the version 1
@@ -93,7 +93,7 @@ public class ProjectRest
     private Response getProjectListV1( )
     {
         List<Project> _listProjects = ProjectHome.getProjectsList( );
-        
+
         if( _listProjects.isEmpty( ) )
         {
             return Response.status( Response.Status.NO_CONTENT )
@@ -104,7 +104,7 @@ public class ProjectRest
                 .entity( JsonUtil.buildJsonResponse( new JsonResponse( _listProjects ) ) )
                 .build( );
     }
-    
+
     /**
      * Create Project
      * @param nVersion the API version
@@ -118,14 +118,15 @@ public class ProjectRest
     @Produces( MediaType.APPLICATION_JSON )
     public Response createProject(
     @FormParam( Constants.PROJECT_ATTRIBUTE_NAME ) String name,
-    @FormParam( Constants.PROJECT_ATTRIBUTE_EMAIL ) String email,
-    @FormParam( Constants.PROJECT_ATTRIBUTE_PHONE ) String phone,
+    @FormParam( Constants.PROJECT_ATTRIBUTE_SIZE ) int size,
+    @FormParam( Constants.PROJECT_ATTRIBUTE_CURRENT_SIZE ) int currentsize,
+    @FormParam( Constants.PROJECT_ATTRIBUTE_ACTIVE ) int active,
     @PathParam( Constants.VERSION ) Integer nVersion )
     {
         switch ( nVersion )
         {
             case VERSION_1:
-                return createProjectV1( name, email, phone );
+                return createProjectV1( name, size, currentsize, active );
             default:
                 break;
         }
@@ -134,7 +135,7 @@ public class ProjectRest
                 .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_VERSION ) ) )
                 .build( );
     }
-    
+
     /**
      * Create Project V1
      * @param name the name
@@ -142,27 +143,28 @@ public class ProjectRest
      * @param phone the phone
      * @return the Project if created for the version 1
      */
-    private Response createProjectV1( String name, String email, String phone )
+    private Response createProjectV1( String name, int size, int currentsize, int active )
     {
-        if ( StringUtils.isEmpty( name ) || StringUtils.isEmpty( email ) || StringUtils.isEmpty( phone ) )
+        if ( StringUtils.isEmpty( name ) )
         {
             _logger.error( Constants.ERROR_BAD_REQUEST_EMPTY_PARAMETER );
             return Response.status( Response.Status.BAD_REQUEST )
                     .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.BAD_REQUEST.name( ), Constants.ERROR_BAD_REQUEST_EMPTY_PARAMETER ) ) )
                     .build( );
         }
-        
+
         Project _project = new Project( );
         _project.setName( name );
-        _project.setEmail( email );
-        _project.setPhone( phone );
+        _project.setSize( size );
+        _project.setCurrentSize( currentsize );
+        _project.setActive( active );
         ProjectHome.create( _project );
-        
+
         return Response.status( Response.Status.OK )
                 .entity( JsonUtil.buildJsonResponse( new JsonResponse( _project ) ) )
                 .build( );
     }
-    
+
     /**
      * Modify Project
      * @param nVersion the API version
@@ -178,14 +180,15 @@ public class ProjectRest
     public Response modifyProject(
     @PathParam( Constants.ID ) Integer id,
     @FormParam( Constants.PROJECT_ATTRIBUTE_NAME ) String name,
-    @FormParam( Constants.PROJECT_ATTRIBUTE_EMAIL ) String email,
-    @FormParam( Constants.PROJECT_ATTRIBUTE_PHONE ) String phone,
+    @FormParam( Constants.PROJECT_ATTRIBUTE_SIZE ) int size,
+    @FormParam( Constants.PROJECT_ATTRIBUTE_CURRENT_SIZE ) int currentsize,
+    @FormParam( Constants.PROJECT_ATTRIBUTE_ACTIVE ) int active,
     @PathParam( Constants.VERSION ) Integer nVersion )
     {
         switch ( nVersion )
         {
             case VERSION_1:
-                return modifyProjectV1( id, name, email, phone );
+                return modifyProjectV1( id, name, size, currentsize, active );
             default:
                 break;
         }
@@ -194,7 +197,7 @@ public class ProjectRest
                 .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_VERSION ) ) )
                 .build( );
     }
-    
+
     /**
      * Modify Project V1
      * @param id the id
@@ -203,16 +206,16 @@ public class ProjectRest
      * @param phone the phone
      * @return the Project if modified for the version 1
      */
-    private Response modifyProjectV1( Integer id, String name, String email, String phone )
+    private Response modifyProjectV1( Integer id, String name, int size, int currentsize, int active )
     {
-        if ( StringUtils.isEmpty( name ) || StringUtils.isEmpty( email ) || StringUtils.isEmpty( phone ) )
+        if ( StringUtils.isEmpty( name ) )
         {
             _logger.error( Constants.ERROR_BAD_REQUEST_EMPTY_PARAMETER );
             return Response.status( Response.Status.BAD_REQUEST )
                     .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.BAD_REQUEST.name( ), Constants.ERROR_BAD_REQUEST_EMPTY_PARAMETER ) ) )
                     .build( );
         }
-        
+
         Project _project = ProjectHome.findByPrimaryKey( id );
         if ( _project == null )
         {
@@ -221,17 +224,18 @@ public class ProjectRest
                     .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_RESOURCE ) ) )
                     .build( );
         }
-        
+
         _project.setName( name );
-        _project.setEmail( email );
-        _project.setPhone( phone );
+        _project.setSize( size );
+        _project.setCurrentSize( currentsize );
+        _project.setActive( active );
         ProjectHome.update( _project );
-        
+
         return Response.status( Response.Status.OK )
                 .entity( JsonUtil.buildJsonResponse( new JsonResponse( _project ) ) )
                 .build( );
     }
-    
+
     /**
      * Delete Project
      * @param nVersion the API version
@@ -257,7 +261,7 @@ public class ProjectRest
                 .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_VERSION ) ) )
                 .build( );
     }
-    
+
     /**
      * Delete Project V1
      * @param id the id
@@ -273,14 +277,14 @@ public class ProjectRest
                     .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_RESOURCE ) ) )
                     .build( );
         }
-        
+
         ProjectHome.remove( id );
-        
+
         return Response.status( Response.Status.OK )
                 .entity( JsonUtil.buildJsonResponse( new JsonResponse( Constants.EMPTY_OBJECT ) ) )
                 .build( );
     }
-    
+
     /**
      * Get Project
      * @param nVersion the API version
@@ -306,7 +310,7 @@ public class ProjectRest
                 .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_VERSION ) ) )
                 .build( );
     }
-    
+
     /**
      * Get Project V1
      * @param id the id
@@ -322,7 +326,7 @@ public class ProjectRest
                     .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_RESOURCE ) ) )
                     .build( );
         }
-        
+
         return Response.status( Response.Status.OK )
                 .entity( JsonUtil.buildJsonResponse( new JsonResponse( _project ) ) )
                 .build( );
