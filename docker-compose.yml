@@ -12,7 +12,7 @@ services:
 
     lutece-init:
       build: lutece-init/
-      image: jhulib/lutece-init
+      image: jhulibraries/lutece-init
       container_name: lutece-init
       env_file: .env
       depends_on:
