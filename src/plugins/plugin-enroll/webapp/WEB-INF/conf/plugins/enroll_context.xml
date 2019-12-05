@@ -7,7 +7,6 @@
     <bean id="enroll.projectDAO" class="fr.paris.lutece.plugins.enroll.business.ProjectDAO" />
     <bean id="enroll.enrollmentDAO" class="fr.paris.lutece.plugins.enroll.business.enrollment.EnrollmentDAO" />
     <bean id="enroll.projectRest" class="fr.paris.lutece.plugins.enroll.rs.ProjectRest" />
-    <bean id="enroll.enrollmentRest" class="fr.paris.lutece.plugins.enroll.rs.EnrollmentRest" />
 
     <bean id="enroll.swaggerRest" class="fr.paris.lutece.plugins.enroll.rs.SwaggerRest" />
 
