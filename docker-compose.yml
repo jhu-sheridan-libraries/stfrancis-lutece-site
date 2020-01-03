@@ -33,6 +33,7 @@ services:
         - "8080:8080"
       volumes:
         - ./.webapps/:/usr/local/tomcat/webapps/
+        - ./.secrets/:/run/secrets/
 
 volumes:
   db:
