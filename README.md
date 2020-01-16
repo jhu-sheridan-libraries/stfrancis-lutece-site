@@ -43,7 +43,7 @@ The tomcat container will deploy everything in the .webapps directory.
 
 The enroll plugin is mentioned in the `pom` file.  This must be made available to maven
 in order to build the `war` file. Until the plugin is placed in a standard globally accessible location, you will
-need to build and instll it locally. Instructions for doing so are at the [enroll plugin project site.](https://github.com/jhu-sheridan-libraries/lutece-enroll-plugin)
+need to build and install it locally. Instructions for doing so are at the [enroll plugin project site.](https://github.com/jhu-sheridan-libraries/lutece-enroll-plugin)
 
 # Use site
 
