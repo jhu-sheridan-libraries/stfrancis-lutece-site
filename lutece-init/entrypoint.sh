@@ -71,12 +71,6 @@ deploywar=/webapps/lutece.war
 deployedwardir=/webapps/lutece
 extractdir=/lutece
 dbconfigfile=${extractdir}/WEB-INF/conf/db.properties
-internalskinheaderfile=${extractdir}/WEB-INF/templates/skin/site/page_header_internal.html
-homeskinheaderfile=${extractdir}/WEB-INF/templates/skin/site/page_header_home.html
-internaladminheaderfile=${extractdir}/WEB-INF/templates/admin/site/page_header_internal_admin.html
-homeadminheaderfile=${extractdir}/WEB-INF/templates/admin/site/page_header_home_admin.html
-stockiconfile="logo-header.png"
-customiconfile="francis-header-white.png"
 
 # Replace strings in a given file
 # Usage: rplfile KEY VALUE FILE
@@ -96,11 +90,6 @@ then
     rplfile "#DB_USER#" "${DB_USER}" ${dbconfigfile}
     rplfile "#DB_PASS#" "${DB_PASS}" ${dbconfigfile}
     rplfile "#DB_HOST#" "${DB_HOST}" ${dbconfigfile}
-
-    rplfile "${stockiconfile}" "${customiconfile}" ${internalskinheaderfile}
-    rplfile "${stockiconfile}" "${customiconfile}" ${homeskinheaderfile}
-    rplfile "${stockiconfile}" "${customiconfile}" ${internaladminheaderfile}
-    rplfile "${stockiconfile}" "${customiconfile}" ${homeadminheaderfile}
 
     init_db ${extractdir}
 
