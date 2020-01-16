@@ -39,6 +39,12 @@ in the same directory as the `docker-compose.yml` file to populate the database 
 
 The tomcat container will deploy everything in the .webapps directory. 
 
+## Enroll Plugin
+
+The enroll plugin is mentioned in the `pom` file.  This must be made available to maven
+in order to build the `war` file. Until the plugin is placed in a standard globally accessible location, you will
+need to build and install it locally. Instructions for doing so are at the [enroll plugin project site.](https://github.com/jhu-sheridan-libraries/lutece-enroll-plugin)
+
 # Use site
 
 Login as administrator: http://localhost:8080/lutece/jsp/admin/AdminLogin.jsp
