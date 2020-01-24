@@ -67,8 +67,8 @@ DB_ROOT_PASS=${fileValue}
 # Only modify and deploy war if needed.
 
 sourcewar=/lutece.war
-deploywar=/webapps/lutece.war
-deployedwardir=/webapps/lutece
+deploywar=/webapps/ROOT.war
+deployedwardir=/webapps/ROOT
 extractdir=/lutece
 dbconfigfile=${extractdir}/WEB-INF/conf/db.properties
 

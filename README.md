@@ -47,7 +47,7 @@ need to build and install it locally. Instructions for doing so are at the [enro
 
 # Use site
 
-Login as administrator: http://localhost:8080/lutece/jsp/admin/AdminLogin.jsp
+Login as administrator: http://localhost:8080/jsp/admin/AdminLogin.jsp
 Username: admin
 Password: adminadmin
 
