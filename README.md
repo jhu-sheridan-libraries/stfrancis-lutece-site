@@ -19,7 +19,10 @@ keeps its database in a volume. The lutece-init container will do some configura
 # Use site
 
 Login as administrator: http://localhost:8080/jsp/admin/AdminLogin.jsp
+
+```
 Username: admin
 Password: adminadmin
+```
 
 You will be required to reset the admin password.
