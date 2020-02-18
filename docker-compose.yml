@@ -11,7 +11,7 @@ services:
         - ./.secrets/:/run/secrets/
 
     lutece-init:
-      image: jhulibraries/lutece-init:0.2
+      image: jhulibraries/lutece-init:0.3
       container_name: lutece-init
       env_file: .env
       depends_on:
