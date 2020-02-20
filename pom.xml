@@ -9,7 +9,7 @@
   </parent>
       
   <groupId>edu.jhu.library</groupId>
-  <artifactId>francis-lutece-test</artifactId>
+  <artifactId>stfrancis-lutece-site</artifactId>
   <packaging>lutece-site</packaging>
   <version>0.0.3-SNAPSHOT</version>
 
@@ -42,7 +42,7 @@
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>plugin-appointment</artifactId>
-      <version>2.0.31</version>
+      <version>2.0.4</version>
       <type>lutece-plugin</type>
     </dependency>
 
@@ -55,15 +55,15 @@
 
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
-      <artifactId>plugin-forms</artifactId>
-      <version>1.0.4</version>
+      <artifactId>plugin-form</artifactId>
+      <version>4.1.5</version>
       <type>lutece-plugin</type>
     </dependency>
 
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>plugin-html</artifactId>
-      <version>4.0.1</version>
+      <version>3.1.0</version>
       <type>lutece-plugin</type>
     </dependency>
 
@@ -73,6 +73,14 @@
       <version>1.1.1-SNAPSHOT</version>
       <type>lutece-plugin</type>
     </dependency>
+
+    <dependency>
+      <groupId>fr.paris.lutece.plugins</groupId>
+      <artifactId>plugin-mylutece</artifactId>
+      <version>3.3.3</version>
+      <type>lutece-plugin</type>
+    </dependency>
+
 
   </dependencies>
 </project>
