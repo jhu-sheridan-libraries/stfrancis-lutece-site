@@ -11,16 +11,15 @@ services:
         - ./.secrets/:/run/secrets/
 
     lutece-init:
-      image: jhulibraries/lutece-init:0.3
+      image: jhulibraries/lutece-init:0.4
       container_name: lutece-init
       env_file: .env
       depends_on:
         - mysql
       volumes:
-        - ./lutece.war:/lutece.war
         - ./.webapps/:/webapps
         - ./.secrets/:/run/secrets/
-        - ./lutece.sql:/lutece.sql
+        - ./data/:/data/
 
     tomcat:
       container_name: tomcat    
