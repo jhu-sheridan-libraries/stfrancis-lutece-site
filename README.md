@@ -16,6 +16,9 @@ Then run `docker-compose up -d`. MySQL, tomcat, and lutece-init containers will 
 The MySQL container will be configured according the the values set in the .env and 
 keeps its database in a volume. The lutece-init container will do some configuration if needed and deploy a modified `lutece.war` to the `.webapps` directory. (See the [lutece-init project site](https://github.com/jhu-sheridan-libraries/lutece-init) for information on how initialization happens.) The tomcat container will deploy everything in the `.webapps` directory.
 
+For producation deployment, there is a separate `docker-compose.prod.yml` which additionally defines a reverse proxy.
+To use it do `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up`, but you will need the right certs.
+
 # Use site
 
 Login as administrator: http://localhost:8080/jsp/admin/AdminLogin.jsp
