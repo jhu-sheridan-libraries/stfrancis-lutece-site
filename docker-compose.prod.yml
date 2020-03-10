@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+    nginx:
+      container_name: nginx
+      image:  nginx:1.17.7
+      depends_on:
+        - tomcat
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - ./.nginx/conf.d/:/etc/nginx/conf.d/
+        - ./.nginx/certs/cert.crt:/etc/nginx/cert.crt
+        - ./.nginx/certs/cert.key:/etc/nginx/cert.key
