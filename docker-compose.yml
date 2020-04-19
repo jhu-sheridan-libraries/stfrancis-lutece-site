@@ -7,6 +7,8 @@ services:
       env_file: .env
       restart: always
       command: mysqld --default-authentication-plugin=mysql_native_password --skip-mysqlx
+      ports:
+        - "3306:3306"
       volumes:
         - db:/var/lib/mysql
         - ./.secrets/:/run/secrets/
