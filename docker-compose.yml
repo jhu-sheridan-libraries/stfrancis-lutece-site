@@ -20,7 +20,6 @@ services:
         - "8080:8080"
       volumes:
         - ./data/:/data/      
-        - ./.webapps/:/usr/local/tomcat/webapps/
         - ./.secrets/:/run/secrets/
 
 volumes:
