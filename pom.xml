@@ -61,7 +61,7 @@
     <dependency>
       <groupId>fr.paris.lutece</groupId>
       <artifactId>lutece-core</artifactId>
-      <version>7.0.0-RC-01</version>
+      <version>7.0.0-RC-03</version>
       <type>lutece-core</type>
     </dependency>
 
@@ -122,6 +122,30 @@
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>plugin-genericattributes</artifactId>
       <version>[2.1.0-SNAPSHOT,)</version>
+      <type>lutece-plugin</type>
+    </dependency>
+    <dependency>
+      <groupId>fr.paris.lutece.plugins</groupId>
+      <artifactId>plugin-address</artifactId>
+      <version>[1.0.7-SNAPSHOT,)</version>
+      <type>lutece-plugin</type>
+    </dependency>
+    <dependency>
+      <groupId>fr.paris.lutece.plugins</groupId>
+      <artifactId>module-address-autocomplete</artifactId>
+      <version>[1.0.6-SNAPSHOT,)</version>
+      <type>lutece-plugin</type>
+    </dependency>
+    <dependency>
+      <groupId>fr.paris.lutece.plugins</groupId>
+      <artifactId>module-appointment-leaflet</artifactId>
+      <version>[2.0.4-SNAPSHOT,)</version>
+      <type>lutece-plugin</type>
+    </dependency>
+    <dependency>
+      <groupId>fr.paris.lutece.plugins</groupId>
+      <artifactId>plugin-leaflet</artifactId>
+      <version>[1.0.2-SNAPSHOT,)</version>
       <type>lutece-plugin</type>
     </dependency>
   </dependencies>
