@@ -27,7 +27,7 @@ In your docker-compose.yml volumumes section add:
 
 ```
 
-Then you will be able to access the lutece application as webapps/ROOT. Not that you may need root access to do so.
+Then you will be able to access the lutece application as webapps/ROOT. Not that you may need root access to do so. Sometimes templates will be cached and changes will not be reflected by the live site. To force a site reload touch WEB-INF/web.xml.
 
 # Setup first time
 
