@@ -1,0 +1,16 @@
+core_extensions.installed=1
+address-autocomplete.installed=1
+address.installed=1
+appointment-leaflet.installed=1
+appointment.installed=1
+asynchronous-upload.installed=1
+childpages.installed=1
+enroll.installed=1
+filegenerator.installed=1
+genericattributes.installed=1
+html.installed=1
+leaflet.installed=1
+lucene.installed=1
+rest.installed=1
+workflow.installed=1
+xpageportlet.installed=1
