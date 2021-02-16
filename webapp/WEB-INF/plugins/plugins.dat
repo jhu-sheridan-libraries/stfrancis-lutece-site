@@ -11,6 +11,7 @@ genericattributes.installed=1
 html.installed=1
 leaflet.installed=1
 lucene.installed=1
+regularexpression.installed=1
 rest.installed=1
 workflow.installed=1
 xpageportlet.installed=1
