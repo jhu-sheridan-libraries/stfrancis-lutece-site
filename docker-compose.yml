@@ -16,14 +16,14 @@ services:
 
     lutece:
       container_name: lutece    
-      image: jhulibraries/lutece-init:0.7
+      image: ghcr.io/jhu-sheridan-libraries/lutece-init:0.7
       env_file: .env
       depends_on:
         - mysql
       ports:
         - "8080:8080"
       volumes:
-        - ./data/:/data/      
+        - ./data/:/data/
         - ./.secrets/:/run/secrets/
 
 volumes:
