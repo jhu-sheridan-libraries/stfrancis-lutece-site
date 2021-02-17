@@ -554,7 +554,7 @@ $('.form-control-plaintext').parents('div.form-group').addClass('is-filled');
 	<#if items?has_content>
 		<#if sort=true>
 			<#list items?sort_by("name") as item>
-				<#if default_value="${item.code}">
+				<#if default_value?string=item.code>
 					<option selected="selected" value="${item.code}" <#if !item.name?has_content>label="${i18n("portal.util.labelEmpty")}"</#if>>${item.name}</option>
 				<#else>
 					<option value="${item.code}" <#if !item.name?has_content>label="${i18n("portal.util.labelEmpty")}"</#if>>${item.name}</option>
@@ -562,7 +562,7 @@ $('.form-control-plaintext').parents('div.form-group').addClass('is-filled');
 			</#list>
 		<#else>
 			<#list items as item>
-				<#if default_value="${item.code}">
+				<#if default_value?string=item.code>
 					<option selected="selected" value="${item.code}" <#if !item.name?has_content>label="${i18n("portal.util.labelEmpty")}"</#if>>${item.name}</option>
 				<#else>
 					<option value="${item.code}" <#if !item.name?has_content>label="${i18n("portal.util.labelEmpty")}"</#if>>${item.name}</option>
