@@ -88,7 +88,7 @@
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>plugin-html</artifactId>
-      <version>[4.0.2-SNAPSHOT,)</version>
+      <version>4.0.2-SNAPSHOT</version>
       <type>lutece-plugin</type>
     </dependency>
 
@@ -109,43 +109,43 @@
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>plugin-workflow</artifactId>
-      <version>[5.0.0-SNAPSHOT,)</version>
+      <version>5.0.1</version>
       <type>lutece-plugin</type>
     </dependency>
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>library-workflow-core</artifactId>
-      <version>[1.2.3,)</version>
+      <version>1.2.4</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>plugin-genericattributes</artifactId>
-      <version>[2.1.1,)</version>
+      <version>2.1.2</version>
       <type>lutece-plugin</type>
     </dependency>
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>plugin-address</artifactId>
-      <version>[1.0.7-SNAPSHOT,)</version>
+      <version>1.0.7-SNAPSHOT</version>
       <type>lutece-plugin</type>
     </dependency>
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>module-address-autocomplete</artifactId>
-      <version>[1.0.6-SNAPSHOT,)</version>
+      <version>1.0.6-SNAPSHOT</version>
       <type>lutece-plugin</type>
     </dependency>
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>module-appointment-leaflet</artifactId>
-      <version>[2.0.4-SNAPSHOT,)</version>
+      <version>2.0.4-SNAPSHOT</version>
       <type>lutece-plugin</type>
     </dependency>
     <dependency>
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>plugin-leaflet</artifactId>
-      <version>[1.0.2-SNAPSHOT,)</version>
+      <version>1.0.1</version>
       <type>lutece-plugin</type>
     </dependency>
   </dependencies>
