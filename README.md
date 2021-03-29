@@ -21,7 +21,7 @@ keeps its database in a volume. The lutece ontainer will do some configuration i
 
 For efficient development you want to be able to edit templates on the live site. You can do this by mounting the exploded webapp in the lutece container locally.
 
-In your docker-compose.yml volumumes section add:
+In your docker-compose.yml volumes section add:
 ```
     - ./webapps/:/usr/local/tomcat/webapps/
 
