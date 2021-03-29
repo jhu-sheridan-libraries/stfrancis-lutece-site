@@ -16,7 +16,7 @@ services:
 
     lutece:
       container_name: lutece    
-      image: ghcr.io/jhu-sheridan-libraries/lutece-init:0.7
+      image: ghcr.io/jhu-sheridan-libraries/lutece-init:0.8
       env_file: .env
       depends_on:
         - mysql
