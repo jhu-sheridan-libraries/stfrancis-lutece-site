@@ -31,15 +31,19 @@ jobs:
           tar -zxvf /tmp/apache-maven.tar.gz
           mv /tmp/apache-maven-*/bin/mvn ~/mvn
           
-      # - name: get project.version from pom.xml
-      #   id: get_version
-      #   run: echo ::set-output name=project-version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+      - name: get project.version from pom.xml
+        id: get_version
+        run: 
 
-      # - name: get various values for output
-      #   id: get_values
-      #   run: |
-      #     echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
-      #     echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+      - name: get various values for output
+        id: get_values
+        run: |
+          echo ::set-output name=project-version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+          echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
+          echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+
+      - name: Testing
+        run: echo ${{ steps.get_values.outputs.project-version }}
         
       - name: install docker
         uses: docker/setup-buildx-action@v1
