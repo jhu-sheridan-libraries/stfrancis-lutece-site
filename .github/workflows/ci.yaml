@@ -31,10 +31,6 @@ jobs:
           tar -zxvf /tmp/apache-maven.tar.gz
           mv /tmp/apache-maven-*/bin/mvn ~/mvn
           
-      - name: get project.version from pom.xml
-        id: get_version
-        run: 
-
       - name: get various values for output
         id: get_values
         run: |
