@@ -23,7 +23,10 @@ jobs:
         with:
           java-version: '8'
           distribution: 'zulu'
-          
+
+      - name: print mvn version...
+        run: mvn --versioni
+        
       - name: get project.version from pom.xml
         id: get_version
         run: echo "::set-output name=project-version::${mvn help:evaluate -Dexpression='project.version' -q -DforceStdout}"
@@ -55,7 +58,7 @@ jobs:
             ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_version.outputs.project-version }}
           labels: |
             org.opencontainers.image.source=https://github.com/jhu-sheridan-libraries/stfrancis-lutece-site.git
-            org.opencontainers.image.title=stfancis-site
+k            org.opencontainers.image.title=stfancis-site
             org.opencontainers.image.version=${{ steps.get_version.outputs.project-version }}
             org.opencontainers.image.revision=${{ steps.output.get_values.outputs.sha_short }}
             org.opencontainers.image.description="Implementation of Lutece for the St. Francis Neighborhood Center"
