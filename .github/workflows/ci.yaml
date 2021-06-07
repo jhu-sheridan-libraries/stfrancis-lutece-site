@@ -25,7 +25,7 @@ jobs:
           distribution: 'zulu'
 
       - name: print mvn version...
-        run: mvn --versioni
+        run: mvn --version
         
       - name: get project.version from pom.xml
         id: get_version
