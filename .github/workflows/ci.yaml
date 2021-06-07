@@ -33,7 +33,7 @@ jobs:
           
       - name: get project.version from pom.xml
         id: get_version
-        run: echo "::set-output name=project-version::${~/mvn help:evaluate -Dexpression='project.version' -q -DforceStdout}"
+        run: echo ::set-output name=project-version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
 
       - name: get various values for output
         id: get_values
