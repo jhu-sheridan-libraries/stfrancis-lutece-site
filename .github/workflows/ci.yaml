@@ -60,6 +60,7 @@ jobs:
           tags: |
             ghcr.io/jhu-sheridan-libraries/stfrancis-site:latest
             ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_values.outputs.sha_short }}
+            ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_values.outputs.project-version }}-${{ steps.get_values.outputs.sha_short }}
           # labels: |
           #   org.opencontainers.image.source=https://github.com/jhu-sheridan-libraries/stfrancis-lutece-site.git
           #   org.opencontainers.image.title=stfancis-site
