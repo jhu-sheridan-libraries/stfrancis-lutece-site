@@ -16,7 +16,7 @@ services:
 
     lutece:
       container_name: lutece    
-      image: ghcr.io/jhu-sheridan-libraries/stfrancis-site:0.0.6
+      image: ghcr.io/jhu-sheridan-libraries/stfrancis-site:0.0.8
       env_file: .env
       depends_on:
         - mysql
