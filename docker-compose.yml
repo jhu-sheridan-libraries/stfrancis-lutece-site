@@ -16,15 +16,16 @@ services:
 
     lutece:
       container_name: lutece    
-      image: ghcr.io/jhu-sheridan-libraries/lutece-init:0.8
+      image: stfrancis-site:test
       env_file: .env
       depends_on:
         - mysql
+      command: ["ls", "-lah", "/data"]
       ports:
         - "8080:8080"
-      volumes:
-        - ./data/:/data/
-        - ./.secrets/:/run/secrets/
+  #    volumes:
+        #- ./data/:/data/
+ #       - ./.secrets/:/run/secrets/
 
 volumes:
   db:
