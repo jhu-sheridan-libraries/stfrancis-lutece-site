@@ -24,12 +24,16 @@ jobs:
           java-version: '8'
           distribution: 'zulu'
 
-      - name: print mvn version...
-        run: mvn --version
-        
+      - name: Install old maven (PLEASE FIX ME)
+        run: |
+          curl -sSL https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -o /tmp/apache-maven.tar.gz
+          cd /tmp
+          tar -zxvf /tmp/apache-maven.tar.gz
+          mv /tmp/apache-maven-*/bin/mvn /usr/local/bin/mvn
+          
       - name: get project.version from pom.xml
         id: get_version
-        run: echo "::set-output name=project-version::${mvn help:evaluate -Dexpression='project.version' -q -DforceStdout}"
+        run: echo "::set-output name=project-version::${/usr/local/bin/mvn help:evaluate -Dexpression='project.version' -q -DforceStdout}"
 
       - name: get various values for output
         id: get_values
