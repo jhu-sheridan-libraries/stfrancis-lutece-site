@@ -51,7 +51,7 @@ jobs:
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 
       - name: Testing
-        run: echo ${{ steps.get_values.outputs.project_version }}
+        run: ls -lah ~/.m2/
         
       - name: install docker
         uses: docker/setup-buildx-action@v1
