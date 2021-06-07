@@ -53,6 +53,7 @@ jobs:
       - name: Copy .m2 into docker context
         run: |
           cp -aR ~/.m2 m2
+        
       - name: Testing
         run: /home/runner/maven/bin/mvn --version
         
