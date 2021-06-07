@@ -42,7 +42,7 @@ jobs:
         id: get_values
         run: |
           echo "hello there"
-          echo ::set-output name=project-version::$(~/maven/bin/mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+          echo ::set-output name=project-version::$(~/maven/bin/mvn -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
           echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 
