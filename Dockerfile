@@ -8,6 +8,7 @@ RUN mkdir -p /data /build
 WORKDIR /build
 COPY pom.xml .
 COPY src ./src
+COPY m2 ~/.m2
 COPY webapp ./webapp
 WORKDIR /tmp
 RUN git clone https://github.com/jhu-sheridan-libraries/lutece-enroll-plugin.git && \
