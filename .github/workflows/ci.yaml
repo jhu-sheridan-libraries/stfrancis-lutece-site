@@ -32,12 +32,16 @@ jobs:
           tar -zxvf /tmp/apache-maven.tar.gz --strip-components=1 -C /home/runner/maven
 
       - uses: actions/cache@v1
+        env:
+          cache-name: stfrancis-maven-cache
         with:
           path: ~/.m2/repository
-          key: stfrancis-site-maven
+          key: ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{ hashFiles('**/*.pom') }}
           restore-keys: |
-            stfrancis-site-maven
-
+            ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+          
       - name: get various values for output
         id: get_values
         run: |
