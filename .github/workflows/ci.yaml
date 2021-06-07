@@ -30,14 +30,21 @@ jobs:
           cd /tmp
           mkdir /home/runner/maven
           tar -zxvf /tmp/apache-maven.tar.gz --strip-components=1 -C /home/runner/maven
-          
-      - name: get various values for output
-        id: get_values
-        run: |
-          echo "hello there"
-          echo ::set-output name=project-version::$(~/maven/bin/mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
-          echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
-          echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: stfrancis-site-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            stfrancis-site-maven-
+
+      # - name: get various values for output
+      #   id: get_values
+      #   run: |
+      #     echo "hello there"
+      #     echo ::set-output name=project-version::$(~/maven/bin/mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+      #     echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
+      #     echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 
       - name: Testing
         run: /home/runner/maven/bin/mvn --version
@@ -60,7 +67,7 @@ jobs:
           tags: |
             ghcr.io/jhu-sheridan-libraries/stfrancis-site:latest
             ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_values.outputs.sha_short }}
-            ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_values.outputs.project-version }}-${{ steps.get_values.outputs.sha_short }}
+
           # labels: |
           #   org.opencontainers.image.source=https://github.com/jhu-sheridan-libraries/stfrancis-lutece-site.git
           #   org.opencontainers.image.title=stfancis-site
