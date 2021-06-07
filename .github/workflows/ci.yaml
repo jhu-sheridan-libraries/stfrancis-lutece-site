@@ -50,12 +50,8 @@ jobs:
           echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 
-      - name: Copy .m2 into docker context
-        run: |
-          cp -aR ~/.m2 m2
-        
       - name: Testing
-        run: /home/runner/maven/bin/mvn --version
+        run: echo ${{ steps.get_values.outputs.project_version }}
         
       - name: install docker
         uses: docker/setup-buildx-action@v1
