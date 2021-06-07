@@ -34,9 +34,9 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: ~/.m2/repository
-          key: stfrancis-site-maven-${{ hashFiles('**/pom.xml') }}
+          key: stfrancis-site-maven
           restore-keys: |
-            stfrancis-site-maven-
+            stfrancis-site-maven
 
       - name: get various values for output
         id: get_values
