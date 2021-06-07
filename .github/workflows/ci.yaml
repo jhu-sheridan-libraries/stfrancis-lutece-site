@@ -58,7 +58,7 @@ jobs:
             ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_version.outputs.project-version }}
           labels: |
             org.opencontainers.image.source=https://github.com/jhu-sheridan-libraries/stfrancis-lutece-site.git
-k            org.opencontainers.image.title=stfancis-site
+            org.opencontainers.image.title=stfancis-site
             org.opencontainers.image.version=${{ steps.get_version.outputs.project-version }}
             org.opencontainers.image.revision=${{ steps.output.get_values.outputs.sha_short }}
             org.opencontainers.image.description="Implementation of Lutece for the St. Francis Neighborhood Center"
