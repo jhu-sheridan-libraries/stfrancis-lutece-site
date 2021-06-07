@@ -58,15 +58,15 @@ jobs:
           push: ${{ github.event_name == 'push' }}
           tags: |
             ghcr.io/jhu-sheridan-libraries/stfrancis-site:latest
-            ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_version.outputs.project-version }}-${{ steps.get_values.outputs.sha_short }}
-            ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_version.outputs.project-version }}
-          labels: |
-            org.opencontainers.image.source=https://github.com/jhu-sheridan-libraries/stfrancis-lutece-site.git
-            org.opencontainers.image.title=stfancis-site
-            org.opencontainers.image.version=${{ steps.get_version.outputs.project-version }}
-            org.opencontainers.image.revision=${{ steps.output.get_values.outputs.sha_short }}
-            org.opencontainers.image.description="Implementation of Lutece for the St. Francis Neighborhood Center"
-            org.opencontainers.image.build-date=${{ steps.output.get_values.outputs.created }}
-            org.opencontainers.image.vendor="The Johns Hopkins Open Source Programs Office"
+            # ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_version.outputs.project-version }}-${{ steps.get_values.outputs.sha_short }}
+            # ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_version.outputs.project-version }}
+          # labels: |
+          #   org.opencontainers.image.source=https://github.com/jhu-sheridan-libraries/stfrancis-lutece-site.git
+          #   org.opencontainers.image.title=stfancis-site
+          #   org.opencontainers.image.version=${{ steps.get_version.outputs.project-version }}
+          #   org.opencontainers.image.revision=${{ steps.output.get_values.outputs.sha_short }}
+          #   org.opencontainers.image.description="Implementation of Lutece for the St. Francis Neighborhood Center"
+          #   org.opencontainers.image.build-date=${{ steps.output.get_values.outputs.created }}
+          #   org.opencontainers.image.vendor="The Johns Hopkins Open Source Programs Office"
       
     
