@@ -59,6 +59,7 @@ jobs:
           push: ${{ github.event_name == 'push' }}
           tags: |
             ghcr.io/jhu-sheridan-libraries/stfrancis-site:latest
+            ghcr.io/jhu-sheridan-libraries/stfrancis-site:${{ steps.get_values.outputs.project-version }}
           # labels: |
           #   org.opencontainers.image.source=https://github.com/jhu-sheridan-libraries/stfrancis-lutece-site.git
           #   org.opencontainers.image.title=stfancis-site
