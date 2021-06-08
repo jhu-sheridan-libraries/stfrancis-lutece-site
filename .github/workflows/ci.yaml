@@ -50,7 +50,7 @@ jobs:
 
       - name: build enroll plugin
         run: |
-          ~/maven/bin/mvn clean install -Dmaven.test.skip
+          ~/maven/bin/mvn install -Dmaven.test.skip
 
       - name: checkout gru appointment plugin
         uses: actions/checkout@v2
@@ -60,13 +60,13 @@ jobs:
 
       - name: build appointment plugin
         run: |
-          ~/maven/bin/mvn clean install -Dmaven.test.skip
+          ~/maven/bin/mvn install -Dmaven.test.skip
 
       - name: get various values for output
         id: get_values
         run: |
           echo "hello there"
-          echo ::set-output name=project_version::$(~/maven/bin/mvn -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+          echo ::set-output name=project_version::$(~/maven/bin/mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
           
