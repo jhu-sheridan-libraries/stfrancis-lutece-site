@@ -38,7 +38,7 @@ jobs:
             ~/assets/
           key: ${{ runner.os }}-stfrancis-${{ hashfiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
+            ${{ runner.os }}-stfrancis-
 
       - name: check for the existence of assets
         run: ls -lah ~/
@@ -92,7 +92,7 @@ jobs:
             ~/assets/
           key: ${{ runner.os }}-stfrancis-${{ hashfiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
+            ${{ runner.os }}-stfrancis-
 
       - name: existence check
         run: ls -lah ~/
