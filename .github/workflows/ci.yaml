@@ -35,14 +35,17 @@ jobs:
         with:
           path: |
             ~/.m2/repository
-            ~/lutece.war
+            ~/assets
             
           key: ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{ hashFiles('**/*.pom') }}
           restore-keys: |
             ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-      
+
+      - name: check for the existence of assets
+        run: ls -lah ~/
+        
       - name: checkout enroll plugin
         uses: actions/checkout@v2
         with:
@@ -76,7 +79,8 @@ jobs:
       - name: build lutece war
         run: |
           ~/maven/bin/mvn lutece:site-assembly
-          cp target/stfrancis-lutece-site-${{ steps.get_values.outputs.project_version }}.war ~/lutece.war
+          mkdir -p ~/assets/
+          cp target/stfrancis-lutece-site-${{ steps.get_values.outputs.project_version }}.war ~/assets/lutece.war
           
   docker-build:
     needs: maven-build
@@ -88,7 +92,7 @@ jobs:
         with:
           path: |
             ~/.m2/repository
-            ~/lutece.war
+            ~/assets
             
           key: ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{ hashFiles('**/*.pom') }}
           restore-keys: |
@@ -96,7 +100,6 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       
-      - name: Testing
-        run: ls -lah ~/lutece.war    
-
+      - name: existence check
+        run: ls -lah ~/
   
