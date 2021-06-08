@@ -34,18 +34,9 @@ jobs:
           cache-name: stfrancis-maven-cache
         with:
           path: |
-            ~/.m2/repository
-          key: ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{hashfiles('**/pom.xml')}}
-          restore-keys: |
-            ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
-
-      - uses: actions/cache@v1
-        env:
-          cache-name: stfrancis-asset-cache
-        with:
-          path: |
-            ~/assets
-          key: ${{ runner.os }}-stfrancis-${{ env.cache-name }-${{ hashfiles('~/assets/*') }}
+            ~/.m2/repository/
+            ~/assets/
+          key: ${{ runner.os }}-stfrancis-${{ hashfiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
 
