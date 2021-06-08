@@ -62,6 +62,9 @@ jobs:
         run: |
           ~/maven/bin/mvn install -Dmaven.test.skip
 
+      - name: check out the codebase
+        uses: actions/checkout@v2
+
       - name: get various values for output
         id: get_values
         run: |
@@ -69,10 +72,7 @@ jobs:
           echo ::set-output name=project_version::$(~/maven/bin/mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-          
-      - name: check out the codebase
-        uses: actions/checkout@v2
-
+        
       - name: build lutece war
         run: |
           ~/maven/bin/mvn lutece:site-assembly
