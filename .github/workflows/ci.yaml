@@ -53,6 +53,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: jhu-sheridan-libraries/gru-plugin-appointment
+          ref: i18n-2.2
 
       - name: build appointment plugin
         run: |
