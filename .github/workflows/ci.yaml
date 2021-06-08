@@ -12,7 +12,57 @@ jobs:
     name: Lint
     steps:
       - run: echo "no linting happens yet. Should we use the the checkstyle maven plugin?"
-  build:
+  maven-build:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: set up java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'zulu'
+
+      - name: Install old maven (PLEASE FIX ME)
+        run: |
+          curl -sSL https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -o /tmp/apache-maven.tar.gz
+          cd /tmp
+          mkdir /home/runner/maven
+          tar -zxvf /tmp/apache-maven.tar.gz --strip-components=1 -C /home/runner/maven
+
+      - uses: actions/cache@v1
+        env:
+          cache-name: stfrancis-maven-cache
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{ hashFiles('**/*.pom') }}
+          restore-keys: |
+            ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      
+      - name: checkout enroll plugin
+        uses: actions/checkout@v2
+        with:
+          repository: jhu-sheridan-libraries/lutece-enroll-plugin
+
+      - name: build enroll plugin
+        run: |
+          ~/maven/bin/mvn clean install -Dmaven.test.skip
+
+      - name: checkout gru appointment plugin
+        uses: actions/checkout@v2
+        with:
+          repository: jhu-sheridan-libraries/gru-plugin-appointment
+
+      - name: build appointment plugin
+        run: |
+          ~/maven/bin/mvn clean install -Dmaven.test.skip
+          
+      - name: check out the codebase
+        uses: actions/checkout@v2
+
+  docker-build:
+    needs: maven-build
     runs-on: ubuntu-latest
     steps:
       - name: check out the codebase
@@ -41,7 +91,7 @@ jobs:
             ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-          
+      
       - name: get various values for output
         id: get_values
         run: |
@@ -52,7 +102,9 @@ jobs:
 
       - name: Testing
         run: ls -lah ~/.m2/
-        
+
+      
+  
       - name: install docker
         uses: docker/setup-buildx-action@v1
 
