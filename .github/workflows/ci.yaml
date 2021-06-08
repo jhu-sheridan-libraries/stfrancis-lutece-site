@@ -37,11 +37,9 @@ jobs:
             ~/.m2/repository
             ~/assets
             
-          key: ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{ hashFiles('**/*.pom') }}
+          key: ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{hashfiles('**/pom.xml')}}-${{hashfiles('~/assets/*')}}
           restore-keys: |
-            ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{hashfiles('**/pom.xml')}}-${{hashfiles('~/assets/*')}}
 
       - name: check for the existence of assets
         run: ls -lah ~/
@@ -93,12 +91,9 @@ jobs:
           path: |
             ~/.m2/repository
             ~/assets
-            
-          key: ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{ hashFiles('**/*.pom') }}
+          key: ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{hashfiles('**/pom.xml')}}-${{hashfiles('~/assets/*')}}
           restore-keys: |
-            ${{ runner.os }}-stfrancis-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-stfrancis-${{ env.cache-name }}-${{hashfiles('**/pom.xml')}}-${{hashfiles('~/assets/*')}}
       
       - name: existence check
         run: ls -lah ~/
