@@ -11,7 +11,7 @@
   <groupId>edu.jhu.library</groupId>
   <artifactId>stfrancis-lutece-site</artifactId>
   <packaging>lutece-site</packaging>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
 
  <!-- <repositories>
     <repository>
@@ -97,6 +97,20 @@
       <groupId>fr.paris.lutece.plugins</groupId>
       <artifactId>module-address-autocomplete</artifactId>
       <version>1.0.6-SNAPSHOT</version>
+      <type>lutece-plugin</type>
+    </dependency>
+
+    <dependency>
+      <groupId>fr.paris.lutece.plugins</groupId>
+      <artifactId>plugin-html</artifactId>
+      <version>4.0.2-SNAPSHOT</version>
+      <type>lutece-plugin</type>
+    </dependency>
+
+    <dependency>
+      <groupId>fr.paris.lutece.plugins</groupId>
+      <artifactId>plugin-xpageportlet</artifactId>
+      <version>1.0.2</version>
       <type>lutece-plugin</type>
     </dependency>
 
